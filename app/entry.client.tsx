@@ -4,15 +4,19 @@
  * For more information, see https://remix.run/file-conventions/entry.client
  */
 
-import { RemixBrowser } from "@remix-run/react";
-import { startTransition, StrictMode } from "react";
-import { hydrateRoot } from "react-dom/client";
+import { RemixBrowser } from '@remix-run/react'
+import { startTransition, StrictMode } from 'react'
+import { hydrateRoot } from 'react-dom/client'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from './api/config/query-client'
 
 startTransition(() => {
   hydrateRoot(
     document,
     <StrictMode>
-      <RemixBrowser />
+      <QueryClientProvider client={queryClient}>
+        <RemixBrowser />
+      </QueryClientProvider>
     </StrictMode>
-  );
-});
+  )
+})

@@ -1,58 +1,37 @@
-import { useState } from 'react'
 import { useNavigate } from '@remix-run/react'
-import { Button } from '~/components/ui/button'
-import { Input } from '~/components/ui/input'
-import { Label } from '~/components/ui/label'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
-import { useAuthStore } from '~/stores/auth-store'
+import { LoginForm } from '~/components/auth/LoginForm'
+import { useAuth } from '~/api/hooks/use-auth'
+import { useEffect } from 'react'
+import { useToast } from '~/components/ui/use-toast'
 
 export default function LoginPage() {
   const navigate = useNavigate()
-  const login = useAuthStore(state => state.login)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const { login, isLoading, error } = useAuth()
+  const { toast } = useToast()
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    await login(email, password)
-    navigate('/dashboard')
+  useEffect(() => {
+    if (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Login Failed',
+        description: error instanceof Error ? error.message : 'An error occurred during login'
+      })
+    }
+  }, [error, toast])
+
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      await login({ email, password })
+      navigate('/dashboard')
+    } catch (error) {
+      // Error handling is done in the useEffect above
+      console.error('Login failed:', error)
+    }
   }
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-50'>
-      <Card className='w-[350px]'>
-        <CardHeader>
-          <CardTitle>Login</CardTitle>
-          <CardDescription>Enter your credentials to access the dashboard</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className='space-y-4'>
-            <div className='space-y-2'>
-              <Label htmlFor='email'>Email</Label>
-              <Input
-                id='email'
-                type='email'
-                value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className='space-y-2'>
-              <Label htmlFor='password'>Password</Label>
-              <Input
-                id='password'
-                type='password'
-                value={password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <Button type='submit' className='w-full'>
-              Login
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+      <LoginForm onSubmit={handleLogin} isLoading={isLoading} />
     </div>
   )
 }
