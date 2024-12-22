@@ -1,7 +1,9 @@
 # Project Guidelines and Standards
 
 ## Technology Expertise
+
 We are specialists in:
+
 - Remix.js (Modern React Framework)
 - TypeScript
 - TailwindCSS
@@ -9,9 +11,10 @@ We are specialists in:
 - Node.js (20+)
 - Vite
 
-## Key Principles
+## Core Principles
 
 ### Architecture
+
 - Follow Remix's nested routing pattern
 - Implement loader/action pattern for data handling
 - Use Resource Routes for API endpoints
@@ -19,125 +22,190 @@ We are specialists in:
 - Implement progressive enhancement where possible
 - Use shadcn-ui components as building blocks
 
-### Component Usage
-- Use shadcn-ui components from ~/components/ui as foundation
-- Always compose complex components from simpler ones
-- Customize components using theme tokens only
-- Follow shadcn-ui's composition pattern strictly
-- Maintain accessibility features of base components
-- Use Radix primitives for complex interactions
-- Create variants using cva (class-variance-authority)
-- Document all component variants
+### File Structure & Organization
 
-### UI/UX Standards
-- Follow shadcn-ui's design system strictly
-- Maintain consistent spacing using tailwind classes
-- Use theme variables for colors exclusively - no hard-coded colors
-- Implement dark mode support by default
-- Keep responsive design in mind
-- Prefer whitespace and typography for visual hierarchy
-- Use subtle animations sparingly
-- Maintain consistent component spacing
-- Follow 8px grid system
-- Use semantic color naming
+- Follow consistent directory structure:
+  ```
+  ~/
+  ├── components/
+  │   ├── ui/          # shadcn-ui components
+  │   ├── features/    # feature-specific components
+  │   ├── layout/      # layout components
+  │   └── auth/        # auth components
+  ├── stores/          # Zustand stores
+  ├── api/             # API integration
+  │   ├── config/      # API configuration
+  │   ├── hooks/       # React Query hooks
+  │   ├── services/    # API services
+  │   └── types/       # API types
+  ├── lib/             # Utilities
+  ├── styles/          # Global styles
+  └── routes/          # Remix routes
+  ```
+- Follow naming conventions:
+  - Files: kebab-case (user-profile.ts)
+  - Components: PascalCase (UserProfile.tsx)
+  - Hooks: use- prefix (use-auth.ts)
+  - Stores: -store suffix (auth-store.ts)
+  - Services: -service suffix (user-service.ts)
+  - Types: .d.ts extension for definitions
+- Keep files under 200 lines
+- Maximum nesting depth of 3 levels
+- Use meaningful names
+- Implement proper TypeScript types
 
 ### Code Style
+
 - Use TypeScript strict mode
 - Prefer functional components
 - Use named exports over default exports
 - Keep components under 350 lines
-- Maximum nesting depth of 3 levels
 - Use meaningful variable names (no abbreviations)
 - Implement proper TypeScript interfaces/types
 
-### State Management
-- Use Remix's built-in data management
-- Prefer URL state over client state when possible
-- Implement form validation on both client and server
-- Use React's useState for simple local state
-- Implement proper loading states
+### Component Architecture
 
-### Error Handling
-- Implement proper error boundaries
-- Use typed error responses
-- Handle all async operations with try/catch
-- Implement proper form validation
-- Show user-friendly error messages
-- Log errors appropriately
-
-### Security
-- Implement CSRF protection
-- Sanitize all user inputs
-- Use proper content security policies
-- Implement proper authentication flows
-- Never expose sensitive data in client
-- Use environment variables for secrets
-
-### Performance
-- Implement proper code splitting
-- Use proper caching strategies
-- Optimize images and assets
-- Implement proper loading states
-- Use proper meta tags for SEO
-
-### Testing
-- Write unit tests for utilities
-- Write integration tests for critical paths
-- Test error scenarios
-- Implement E2E tests for critical flows
-- Test accessibility
-
-### Accessibility
-- Follow WCAG 2.1 guidelines
-- Use semantic HTML
-- Implement proper ARIA attributes
-- Ensure keyboard navigation
-- Test with screen readers
-
-### File Structure
-- Follow the project's file structure guidelines
-- Use meaningful folder names
-- Implement proper subfolder organization
-- Keep files under 200 lines
-- Maximum nesting depth of 3 levels
-- Use meaningful variable names (no abbreviations)
-- Implement proper TypeScript interfaces/types
-- Implement proper loading states
-- Implement proper error handling
-- Implement proper security measures
-- Implement proper performance optimizations
-- Implement proper testing strategies
-- Implement proper accessibility features
-- Implement proper Git conventions
-- Implement proper file structure guidelines 
-
-### Component Organization
-- Place shadcn-ui components in ~/components/ui
-- Custom components extend shadcn-ui when possible
-- Maintain separation between UI and feature components
-- Document component variants and props
+- Use shadcn-ui components as foundation
+- Always compose complex components from simpler ones
+- Customize components using theme tokens only
+- Follow shadcn-ui's composition pattern strictly
+- Maintain accessibility features
+- Use Radix primitives for complex interactions
+- Create variants using cva (class-variance-authority)
+- Document all component variants and props
 - Keep component stories updated
 
-### Theme Customization
-- Use tailwind.config.ts for theme extensions
-- Maintain consistent color palette
-- Use CSS variables for dynamic values
-- Follow shadcn-ui theming conventions
-- Document custom theme modifications
+### Design System
 
-### Design Principles
+- Follow shadcn-ui's design system strictly
 - Embrace minimalism - less is more
-- Maintain consistent visual rhythm
-- Use typography as a primary design element
-- Prefer subtle shadows and minimal borders
-- Keep interfaces clean and uncluttered
-- Use animation purposefully, not decoratively
-- Maintain consistent component sizing
+- Use theme variables for colors exclusively
+- Implement dark mode support by default
+- Maintain consistent spacing using tailwind classes
+- Follow 8px grid system
+- Use semantic color naming
+- Prefer whitespace and typography for hierarchy
+- Use subtle animations purposefully
 - Follow visual hierarchy principles
 - Use negative space effectively
 - Design for scalability and reuse
-- Ensure component cohesion across the app
-- Follow modular scale for typography and spacing
-- Use color with purpose and restraint
-- Maintain consistent interaction patterns
-- Design with accessibility in mind from the start
+
+### State Management
+
+- Client State (Zustand):
+
+  - Keep stores small and focused
+  - Use middleware when needed (persist, devtools, immer)
+  - Follow store slicing pattern
+  - Use selectors for state access
+  - Avoid storing derived state
+  - Implement proper cleanup
+  - Use shallow equality checks
+  - Document interfaces and actions
+
+- Server State (React Query):
+  - Use proper query keys and caching
+  - Handle loading and error states
+  - Type all responses
+  - Use suspense when appropriate
+  - Enable devtools in development
+  - Implement optimistic updates
+  - Handle offline scenarios
+  - Use infinite queries for pagination
+
+### Authentication & Security
+
+- Authentication:
+
+  - Use Zustand for auth state
+  - Implement JWT-based auth
+  - Handle token expiration
+  - Secure token storage
+  - Implement proper login/logout flow
+  - Remember user preferences
+  - Clear sensitive data on logout
+
+- Authorization:
+
+  - Use protected routes with role-based access
+  - Handle unauthorized access gracefully
+  - Implement loading states
+  - Type-safe role definitions
+  - Example protected route:
+    ```tsx
+    <ProtectedRoute requiredRole='admin'>
+      <AdminDashboard />
+    </ProtectedRoute>
+    ```
+
+- Security:
+  - Implement CSRF protection
+  - Use proper authentication headers
+  - Sanitize all inputs/outputs
+  - Use refresh token rotation
+  - Implement proper CORS settings
+  - Use environment variables for secrets
+  - Never expose sensitive data
+  - Implement rate limiting
+  - Use HTTPS only
+
+### Navigation & Layout
+
+- Navigation:
+
+  - Use Radix Navigation Menu
+  - Separate public/private routes
+  - Role-based navigation items
+  - Handle mobile navigation
+  - Use theme tokens for styling
+  - Manage z-index properly
+
+- Layout:
+  - Use consistent layout structure:
+    ```tsx
+    <RootLayout>
+      <ProtectedRoute>
+        <PageContent />
+      </ProtectedRoute>
+    </RootLayout>
+    ```
+  - Implement responsive patterns
+  - Maintain consistent spacing
+  - Handle nested layouts when needed
+
+### Error Handling
+
+- Use error boundaries strategically
+- Handle different error types:
+  - Network errors
+  - Validation errors
+  - Authentication errors
+  - Authorization errors
+- Show user-friendly messages
+- Implement proper retry mechanisms
+- Log errors appropriately
+- Handle offline scenarios
+- Implement form validation
+
+### Performance
+
+- Implement code splitting
+- Use proper caching strategies
+- Optimize assets and payloads
+- Use compression
+- Implement request cancellation
+- Use proper batch requests
+- Monitor performance metrics
+- Use proper meta tags for SEO
+- Handle loading states gracefully
+
+### Testing & Quality
+
+- Write unit tests for utilities
+- Test critical paths
+- Test error scenarios
+- Implement E2E tests
+- Test accessibility
+- Follow code review process
+- Maintain documentation
+- Follow WCAG 2.1 guidelines
