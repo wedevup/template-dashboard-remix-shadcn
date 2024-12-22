@@ -1,16 +1,3 @@
-# Project Backlog
-
-## Priority 1 - Core Features
-
-### Authentication System
-
-- [ ] User registration
-- [ ] User login
-- [ ] Protected routes
-- [ ] Role-based access
-- [ ] JWT implementation
-- [ ] Password reset
-
 ### Basic Dashboard
 
 - [ ] Layout implementation
