@@ -1,21 +1,18 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { jwtDecode } from 'jwt-decode'
 
 interface User {
   id: string
   email: string
   name: string
-  role: 'admin' | 'user'
 }
 
 interface AuthState {
   token: string | null
   user: User | null
   isAuthenticated: boolean
-  login: (token: string) => void
+  login: (email: string, password: string) => Promise<void>
   logout: () => void
-  updateUser: (user: Partial<User>) => void
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -24,17 +21,30 @@ export const useAuthStore = create<AuthState>()(
       token: null,
       user: null,
       isAuthenticated: false,
-      login: token => {
-        const user = jwtDecode<User>(token)
-        set({ token, user, isAuthenticated: true })
+
+      login: async (email: string, password: string) => {
+        // In a real app, this would make an API call
+        // For now, we'll just simulate a successful login with mock data
+        if (email && password) {
+          const mockUser = {
+            id: '1',
+            email,
+            name: 'Test User'
+          }
+          set({
+            token: 'mock-jwt-token',
+            user: mockUser,
+            isAuthenticated: true
+          })
+        }
       },
+
       logout: () => {
-        set({ token: null, user: null, isAuthenticated: false })
-      },
-      updateUser: userData => {
-        set(state => ({
-          user: state.user ? { ...state.user, ...userData } : null
-        }))
+        set({
+          token: null,
+          user: null,
+          isAuthenticated: false
+        })
       }
     }),
     {
