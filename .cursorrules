@@ -1,0 +1,143 @@
+# Project Guidelines and Standards
+
+## Technology Expertise
+We are specialists in:
+- Remix.js (Modern React Framework)
+- TypeScript
+- TailwindCSS
+- shadcn-ui (Component Library)
+- Node.js (20+)
+- Vite
+
+## Key Principles
+
+### Architecture
+- Follow Remix's nested routing pattern
+- Implement loader/action pattern for data handling
+- Use Resource Routes for API endpoints
+- Keep components atomic and composable
+- Implement progressive enhancement where possible
+- Use shadcn-ui components as building blocks
+
+### Component Usage
+- Use shadcn-ui components from ~/components/ui as foundation
+- Always compose complex components from simpler ones
+- Customize components using theme tokens only
+- Follow shadcn-ui's composition pattern strictly
+- Maintain accessibility features of base components
+- Use Radix primitives for complex interactions
+- Create variants using cva (class-variance-authority)
+- Document all component variants
+
+### UI/UX Standards
+- Follow shadcn-ui's design system strictly
+- Maintain consistent spacing using tailwind classes
+- Use theme variables for colors exclusively - no hard-coded colors
+- Implement dark mode support by default
+- Keep responsive design in mind
+- Prefer whitespace and typography for visual hierarchy
+- Use subtle animations sparingly
+- Maintain consistent component spacing
+- Follow 8px grid system
+- Use semantic color naming
+
+### Code Style
+- Use TypeScript strict mode
+- Prefer functional components
+- Use named exports over default exports
+- Keep components under 350 lines
+- Maximum nesting depth of 3 levels
+- Use meaningful variable names (no abbreviations)
+- Implement proper TypeScript interfaces/types
+
+### State Management
+- Use Remix's built-in data management
+- Prefer URL state over client state when possible
+- Implement form validation on both client and server
+- Use React's useState for simple local state
+- Implement proper loading states
+
+### Error Handling
+- Implement proper error boundaries
+- Use typed error responses
+- Handle all async operations with try/catch
+- Implement proper form validation
+- Show user-friendly error messages
+- Log errors appropriately
+
+### Security
+- Implement CSRF protection
+- Sanitize all user inputs
+- Use proper content security policies
+- Implement proper authentication flows
+- Never expose sensitive data in client
+- Use environment variables for secrets
+
+### Performance
+- Implement proper code splitting
+- Use proper caching strategies
+- Optimize images and assets
+- Implement proper loading states
+- Use proper meta tags for SEO
+
+### Testing
+- Write unit tests for utilities
+- Write integration tests for critical paths
+- Test error scenarios
+- Implement E2E tests for critical flows
+- Test accessibility
+
+### Accessibility
+- Follow WCAG 2.1 guidelines
+- Use semantic HTML
+- Implement proper ARIA attributes
+- Ensure keyboard navigation
+- Test with screen readers
+
+### File Structure
+- Follow the project's file structure guidelines
+- Use meaningful folder names
+- Implement proper subfolder organization
+- Keep files under 200 lines
+- Maximum nesting depth of 3 levels
+- Use meaningful variable names (no abbreviations)
+- Implement proper TypeScript interfaces/types
+- Implement proper loading states
+- Implement proper error handling
+- Implement proper security measures
+- Implement proper performance optimizations
+- Implement proper testing strategies
+- Implement proper accessibility features
+- Implement proper Git conventions
+- Implement proper file structure guidelines 
+
+### Component Organization
+- Place shadcn-ui components in ~/components/ui
+- Custom components extend shadcn-ui when possible
+- Maintain separation between UI and feature components
+- Document component variants and props
+- Keep component stories updated
+
+### Theme Customization
+- Use tailwind.config.ts for theme extensions
+- Maintain consistent color palette
+- Use CSS variables for dynamic values
+- Follow shadcn-ui theming conventions
+- Document custom theme modifications
+
+### Design Principles
+- Embrace minimalism - less is more
+- Maintain consistent visual rhythm
+- Use typography as a primary design element
+- Prefer subtle shadows and minimal borders
+- Keep interfaces clean and uncluttered
+- Use animation purposefully, not decoratively
+- Maintain consistent component sizing
+- Follow visual hierarchy principles
+- Use negative space effectively
+- Design for scalability and reuse
+- Ensure component cohesion across the app
+- Follow modular scale for typography and spacing
+- Use color with purpose and restraint
+- Maintain consistent interaction patterns
+- Design with accessibility in mind from the start
