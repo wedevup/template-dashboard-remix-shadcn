@@ -201,11 +201,168 @@ We are specialists in:
 
 ### Testing & Quality
 
-- Write unit tests for utilities
-- Test critical paths
-- Test error scenarios
-- Implement E2E tests
-- Test accessibility
-- Follow code review process
-- Maintain documentation
-- Follow WCAG 2.1 guidelines
+- Testing Structure:
+
+  ```
+  ~/
+  ├── tests/
+  │   ├── unit/              # Unit tests
+  │   ├── integration/       # Integration tests
+  │   ├── e2e/              # End-to-end tests
+  │   ├── fixtures/         # Test data
+  │   ├── mocks/           # Mock implementations
+  │   └── utils/           # Test utilities
+  ```
+
+- Coverage Requirements:
+
+  - Maintain minimum 85% code coverage
+  - 100% coverage for critical paths
+  - Track coverage trends in CI
+  - Coverage requirements:
+    ```
+    - Statements: 85%
+    - Branches: 85%
+    - Functions: 85%
+    - Lines: 85%
+    ```
+
+- Unit Testing (Vitest + RTL):
+
+  - Test individual components in isolation
+  - Mock external dependencies
+  - Test component props and events
+  - Test hooks independently
+  - Test utility functions
+  - Test store actions and selectors
+  - Follow AAA pattern (Arrange, Act, Assert)
+  - Example:
+    ```tsx
+    describe('Button', () => {
+      it('should call onClick when clicked', () => {
+        const onClick = vi.fn()
+        render(<Button onClick={onClick}>Click me</Button>)
+        userEvent.click(screen.getByText('Click me'))
+        expect(onClick).toHaveBeenCalled()
+      })
+    })
+    ```
+
+- Integration Testing:
+
+  - Test component interactions
+  - Test data flow between components
+  - Test store integration
+  - Test form submissions
+  - Test API integration
+  - Use MSW for API mocking
+  - Example:
+
+    ```tsx
+    describe('LoginForm', () => {
+      it('should handle successful login', async () => {
+        const user = userEvent.setup()
+        render(<LoginForm />)
+
+        await user.type(screen.getByLabelText('Email'), 'test@example.com')
+        await user.type(screen.getByLabelText('Password'), 'password')
+        await user.click(screen.getByText('Login'))
+
+        expect(await screen.findByText('Welcome')).toBeInTheDocument()
+      })
+    })
+    ```
+
+- E2E Testing (Playwright):
+
+  - Test critical user flows
+  - Test across multiple browsers
+  - Test responsive design
+  - Test accessibility
+  - Record test videos
+  - Take screenshots on failure
+  - Example:
+    ```typescript
+    test('user can login and access dashboard', async ({ page }) => {
+      await page.goto('/')
+      await page.fill('[aria-label="Email"]', 'user@example.com')
+      await page.fill('[aria-label="Password"]', 'password')
+      await page.click('button:has-text("Login")')
+      await expect(page).toHaveURL('/dashboard')
+    })
+    ```
+
+- API Mocking (MSW):
+
+  - Mock API responses
+  - Test error scenarios
+  - Test loading states
+  - Example:
+    ```typescript
+    const handlers = [
+      rest.get('/api/users', (req, res, ctx) => {
+        return res(ctx.json([{ id: 1, name: 'John' }]))
+      }),
+      rest.post('/api/login', (req, res, ctx) => {
+        return res(ctx.json({ token: 'fake-token' }))
+      })
+    ]
+    ```
+
+- Testing Best Practices:
+
+  - Write tests before fixing bugs
+  - Update tests when modifying features
+  - Use meaningful test descriptions
+  - Test error scenarios
+  - Test edge cases
+  - Use proper assertions
+  - Clean up after each test
+  - Use shared test utilities
+  - Document test requirements
+  - Follow test-driven development when possible
+  - Testing Philosophy:
+    - Tests should drive implementation, not the other way around
+    - Don't modify tests to make them pass - fix the implementation
+    - Only mock what's necessary (external APIs, time-dependent operations)
+    - Mocking should not be used to make a failing test pass
+    - If a test fails, understand why and fix the underlying issue
+    - Tests should reflect real user behavior and requirements
+    - Keep tests as close to production behavior as possible
+  - Mocking Guidelines:
+    - Only mock external dependencies
+    - Mock HTTP requests and API calls
+    - Mock time-dependent operations
+    - Mock complex browser APIs when needed
+    - Never mock to hide implementation problems
+    - Document why a mock is necessary
+    - Keep mocks as simple as possible
+
+- Continuous Integration:
+
+  - Run all tests on PR
+  - Block merging on test failure
+  - Generate coverage reports
+  - Run E2E tests in CI
+  - Cache test results
+  - Parallelize test execution
+  - Monitor test duration
+
+- Testing Quality:
+
+  - No flaky tests
+  - Fast execution
+  - Independent tests
+  - Clear failure messages
+  - Easy to maintain
+  - Follow testing patterns
+  - Use testing utilities
+  - Document complex tests
+
+- Accessibility Testing:
+  - Test with screen readers
+  - Test keyboard navigation
+  - Test color contrast
+  - Test ARIA attributes
+  - Test focus management
+  - Use accessibility testing tools
