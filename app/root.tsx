@@ -4,7 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { queryClient } from './api/config/query-client'
 import { Toaster } from './components/ui/toaster'
-import './tailwind.css'
+import './styles/tailwind.css'
 
 export const links: LinksFunction = () => []
 

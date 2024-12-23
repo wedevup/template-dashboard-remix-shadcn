@@ -8,20 +8,36 @@ export function useAuth() {
 
   const loginMutation = useMutation({
     mutationFn: async ({ email, password }: { email: string; password: string }) => {
-      const response = await authService.login(email, password)
-      return response
-    },
-    onSuccess: data => {
-      setUser(data.user)
-      setToken(data.token)
+      try {
+        const response = await authService.login(email, password)
+        if (!response?.user) {
+          throw new Error('Login failed')
+        }
+        setUser(response.user)
+        setToken(response.token)
+        return response
+      } catch (error) {
+        setUser(null)
+        setToken(null)
+        // Rethrow the original error to match test expectations
+        throw error
+      }
     }
   })
 
   const logoutMutation = useMutation({
-    mutationFn: authService.logout,
-    onSuccess: () => {
-      setUser(null)
-      setToken(null)
+    mutationFn: async () => {
+      try {
+        await authService.logout()
+        setUser(null)
+        setToken(null)
+      } catch (error) {
+        // Still clear the state on error
+        setUser(null)
+        setToken(null)
+        // Rethrow the original error to match test expectations
+        throw error
+      }
     }
   })
 

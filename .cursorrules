@@ -63,6 +63,40 @@ We are specialists in:
 - Use meaningful names
 - Implement proper TypeScript types
 
+### Testing Strategy
+
+- Directory Structure:
+
+  ```
+  ~/tests
+  ├── e2e/            # End-to-end tests with Playwright
+  │   ├── features/   # Feature-based tests
+  │   └── mocks/      # Test mocks if needed
+  └── unit/           # Unit tests with Vitest
+  ```
+
+- E2E Testing (Playwright):
+
+  - Test critical user flows
+  - One test file per feature/route
+  - Use page objects for complex flows
+  - Mock API responses using Remix resource routes
+  - Test files end with .spec.ts
+  - Run tests with `npm run test:e2e`
+
+- Test File Naming:
+
+  - E2E Tests: `feature-name.spec.ts`
+  - Unit Tests: `component-name.test.ts`
+
+- Best Practices:
+  - Write tests before fixing bugs
+  - Mock only when necessary
+  - Keep tests independent
+  - Use meaningful test descriptions
+  - Test error states and edge cases
+  - Follow AAA pattern (Arrange, Act, Assert)
+
 ### Code Style
 
 - Use TypeScript strict mode
