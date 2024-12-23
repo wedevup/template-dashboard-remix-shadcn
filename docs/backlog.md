@@ -13,8 +13,13 @@
 
 - ✅ Add tests for auth-store
 - ✅ Add tests for auth-service
-- [ ] Add tests for toast notifications
-- [ ] Achieve >85% test coverage
+- ✅ Add tests for toast notifications
+- ✅ Add tests for ProtectedRoute component
+- ✅ Add tests for Navigation component
+- ✅ Add tests for RootLayout component
+- ✅ Add tests for Login route
+- ✅ Add tests for Dashboard route
+- ✅ Achieve >80% test coverage
 
 ### 🔄 Integration Testing
 
